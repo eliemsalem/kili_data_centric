@@ -18,6 +18,15 @@ https://challengedata.ens.fr/participants/challenges/61/
 - « You will be allowed to give anything to the model » → ajouter des données externes
   (sourcing) semble autorisé, dans la limite de 20 000 lignes. **À confirmer dans le règlement.**
 
+## Projet mis en pause (2026-10-23)
+- **Meilleur jeu : `submissions/sub01_roberta_x2norm.csv`, score local 0,8494** (benchmark 0,7816).
+- **Soumission impossible** : la plateforme renvoie `invalid_grant: account not found`, venant de
+  l'API externe de Kili, apparemment hors service. Aucun score plateforme.
+- Le pli 0 de Qwen 7B (Colab) n'a pas été exploité : gain possible ≤ 0,4 pt (cf. roberta).
+- Code public : https://github.com/eliemsalem/kili_data_centric (sans données ni soumissions).
+- Pour reprendre : réactiver l'env conda `kili` (ou `pip install -r requirements.txt`), et
+  vérifier d'abord si la plateforme évalue de nouveau (soumettre `data/full_train.csv` tel quel).
+
 ## État (mis à jour le 2026-10-23, 2e session)
 - [x] Données dans `data/` : `full_train.csv` (= `x_baseline.csv` + `y_baseline.csv`, 10 000 lignes,
       5 087 positifs / 4 913 négatifs), `train.py.zip` extrait dans `data/kili_script/train.py`.
