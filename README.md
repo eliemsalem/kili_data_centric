@@ -9,6 +9,20 @@ in another language.
 **Result: local accuracy rises from 0.7816 to 0.8494 (+6.8 points)** with the organisers' own
 training script untouched. Only the data changes.
 
+## Data
+
+The challenge data is **not in this repository**: it may not be redistributed. It can be
+downloaded, after creating a free account, from the challenge page:
+**[ENS Challenge Data #61, Kili Technology](https://challengedata.ens.fr/participants/challenges/61/)**.
+
+| File on the challenge page | Put it in | Content |
+|---|---|---|
+| `full_train.csv` (also split as `x_baseline.csv` + `y_baseline.csv`) | `data/` | 10,000 noisy reviews and their labels |
+| supplementary files (`train.py.zip`) | unzip to `data/kili_script/` | the organisers' fastText training script |
+
+The public IMDB dataset used for evaluation is downloaded by `src/download_imdb.py`, from
+[Hugging Face](https://huggingface.co/datasets/stanfordnlp/imdb).
+
 ## Approach
 
 1. **Build an evaluation I can trust before changing anything.** The test set is hidden and the
@@ -82,8 +96,7 @@ docs/                 working notes in French (lab notebook, lessons from a sibl
 
 ## Reproducing
 
-The challenge data is **not included**: it may not be redistributed. Download it from the
-[challenge page](https://challengedata.ens.fr/participants/challenges/61/) (free account).
+First download the challenge data as described in [Data](#data).
 
 ```bash
 pip install -r requirements.txt
