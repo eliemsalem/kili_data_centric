@@ -86,7 +86,7 @@ https://challengedata.ens.fr/participants/challenges/61/
       datant de 2018-2021. S'il existe, il est ailleurs (autre disque, Colab, Drive ?).
 
 ## Mémo Posos
-Lire aussi `MEMO_DEPUIS_POSOS.md` : out-of-fold, professeur Qwen 7B QLoRA (bug `group_by_length`),
+Lire aussi `docs/MEMO_DEPUIS_POSOS.md` : out-of-fold, professeur Qwen 7B QLoRA (bug `group_by_length`),
 arbitre LLM, pièges de la 1080 Ti.
 Correction de son point 1 : le jeu de contrôle n'est pas limité aux ~2 900 critiques avec
 sim ≥ 0,99 (textes intacts). Toutes les tranches de similarité > 0,5 ont le même accord

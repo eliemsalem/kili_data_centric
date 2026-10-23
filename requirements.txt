@@ -1,0 +1,11 @@
+# Évaluation fastText et nettoyage (CPU)
+fasttext-wheel==0.9.2
+pandas>=2.2
+numpy
+scipy
+scikit-learn>=1.5
+pyarrow
+datasets>=2.20
+# Professeur roberta (GPU)
+torch==2.4.1
+transformers==4.45.2

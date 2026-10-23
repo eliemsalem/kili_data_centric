@@ -5,7 +5,7 @@ import tempfile
 import numpy as np
 import pandas as pd
 
-ROOT = '/home/elie/Documents/Hugging-Face/kili_data_centric'
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = f'{ROOT}/data'
 sys.path.insert(0, f'{D}/kili_script')
 import csv  # noqa: E402

@@ -1,10 +1,11 @@
 """Associe chaque critique du train Kili à sa critique IMDB source la plus proche (TF-IDF mots, cosinus)."""
+import os
 import re
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-D = '/home/elie/Documents/Hugging-Face/kili_data_centric/data'
+D = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
 
 
 def norm(s):
