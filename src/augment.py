@@ -1,4 +1,4 @@
-"""Étape 3d (sans données externes) : doubler le jeu avec nos propres critiques."""
+"""Step 3d (no external data): double the training set with our own reviews."""
 import re
 import numpy as np
 import pandas as pd
@@ -13,7 +13,7 @@ base.loc[sus, 'category'] = 1 - y[sus]
 
 
 def norm(s):
-    """Typographie IMDB : ' recollé, ponctuation et tirets détachés réparés."""
+    """IMDB typography: rejoins ' and reattaches detached punctuation and hyphens."""
     s = re.sub(r" ' ", "'", s)
     s = re.sub(r" ([.,!?;:)])", r"\1", s)
     s = re.sub(r"\( ", "(", s)
@@ -22,7 +22,7 @@ def norm(s):
 
 normed = base.assign(review=base.review.map(norm))
 print('base                  : %.4f ± %.4f' % score(base), flush=True)
-print('normalisé seul        : %.4f ± %.4f' % score(normed), flush=True)
-print('x2 duplication exacte : %.4f ± %.4f' % score(pd.concat([base, base])), flush=True)
-print('x2 base + normalisé   : %.4f ± %.4f' % score(pd.concat([base, normed])), flush=True)
-print('x2 normalisé          : %.4f ± %.4f' % score(pd.concat([normed, normed])), flush=True)
+print('normalised only       : %.4f ± %.4f' % score(normed), flush=True)
+print('x2 exact duplicate    : %.4f ± %.4f' % score(pd.concat([base, base])), flush=True)
+print('x2 base + normalised  : %.4f ± %.4f' % score(pd.concat([base, normed])), flush=True)
+print('x2 normalised         : %.4f ± %.4f' % score(pd.concat([normed, normed])), flush=True)

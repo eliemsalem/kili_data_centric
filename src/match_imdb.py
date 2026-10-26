@@ -1,4 +1,4 @@
-"""Associe chaque critique du train Kili à sa critique IMDB source la plus proche (TF-IDF mots, cosinus)."""
+"""Matches each Kili training review to its closest IMDB source review (word TF-IDF, cosine)."""
 import os
 import re
 import numpy as np
@@ -36,5 +36,5 @@ for t in [0.3, 0.5, 0.7]:
 ok = out[out.sim > 0.5]
 print(ok.split.value_counts())
 lab = ok[ok.split != 'unsupervised']
-print('accord étiquette Kili vs IMDB :', (lab.category == lab.imdb_label).mean(), 'n=', len(lab))
-print('sources IMDB distinctes :', ok.imdb_idx.nunique(), '/', len(ok))
+print('Kili vs IMDB label agreement:', (lab.category == lab.imdb_label).mean(), 'n=', len(lab))
+print('distinct IMDB sources:', ok.imdb_idx.nunique(), '/', len(ok))

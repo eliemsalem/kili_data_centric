@@ -1,4 +1,4 @@
-"""Télécharge IMDB (HF stanfordnlp/imdb) dans data/imdb/ : référence pour l'appariement et l'évaluation."""
+"""Downloads IMDB (HF stanfordnlp/imdb) into data/imdb/: reference for matching and evaluation."""
 import os
 from datasets import load_dataset
 

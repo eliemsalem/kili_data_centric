@@ -1,4 +1,4 @@
-"""Assemble les plis OOF d'un professeur et mesure l'inversion des étiquettes suspectes (script Kili)."""
+"""Assembles a teacher's OOF folds and measures flipping the suspect labels (Kili's script)."""
 import glob
 import sys
 import numpy as np
@@ -17,12 +17,12 @@ files = sorted(glob.glob(f'{D}/oof/{prefix}_f*.npz'))
 for f in files:
     z = np.load(f)
     p[z['idx']] = z['p']
-assert not np.isnan(p).any(), f'plis manquants : {len(files)}/5'
+assert not np.isnan(p).any(), f'missing folds: {len(files)}/5'
 np.save(f'{D}/oof_{prefix}.npy', p)
 
 teachers = {prefix: p, f'{prefix}+lr': (p + np.load(f'{D}/oof_lr.npy')) / 2}
 for name, q in teachers.items():
-    print(f'== {name} : accord avec IMDB {((q > .5) == imdb)[known].mean():.4f}', flush=True)
+    print(f'== {name} : IMDB agreement {((q > .5) == imdb)[known].mean():.4f}', flush=True)
     p_other = np.where(y == 1, 1 - q, q)
     for t in [0.5, 0.6, 0.7]:
         sus = p_other > t
@@ -30,5 +30,5 @@ for name, q in teachers.items():
         flip.loc[sus, 'category'] = 1 - y[sus]
         prec = (y != imdb)[known & sus].mean()
         rec = sus[known & (y != imdb)].mean()
-        print(f't={t} suspects={sus.sum()} précision={prec:.3f} rappel={rec:.3f} | '
-              'inverser %.4f ± %.4f' % score(flip), flush=True)
+        print(f't={t} suspects={sus.sum()} precision={prec:.3f} recall={rec:.3f} | '
+              'flip %.4f ± %.4f' % score(flip), flush=True)

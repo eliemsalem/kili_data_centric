@@ -91,7 +91,7 @@ src/
   augment.py          duplication and typography normalisation
   make_submission.py  builds the 20,000-row submission, re-reads and re-scores it, logs it
 colab/                Qwen2.5-7B QLoRA out-of-fold teacher (resumes on Google Drive)
-docs/                 working notes in French (lab notebook, lessons from a sibling project)
+docs/                 working notes (lab notebook, lessons from a sibling project)
 ```
 
 ## Reproducing

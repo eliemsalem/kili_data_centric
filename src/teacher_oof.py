@@ -1,4 +1,4 @@
-"""Professeur roberta-base affiné en OOF 5 plis sur les étiquettes bruitées (GTX 1080 Ti, fp32)."""
+"""roberta-base teacher fine-tuned out-of-fold (5 folds) on the noisy labels (GTX 1080 Ti, fp32)."""
 import argparse
 import os
 import numpy as np
@@ -15,7 +15,7 @@ ap.add_argument('--model', default='roberta-base')
 ap.add_argument('--max_len', type=int, default=512)
 ap.add_argument('--epochs', type=float, default=2)
 ap.add_argument('--lr', type=float, default=2e-5)
-ap.add_argument('--max_steps', type=int, default=-1)  # test de vitesse
+ap.add_argument('--max_steps', type=int, default=-1)  # speed test
 args = ap.parse_args()
 
 train = load_train()
@@ -28,7 +28,7 @@ enc = lambda idx: Dataset.from_dict({'text': [texts[i] for i in idx], 'label': y
     lambda b: tok(b['text'], truncation=True, max_length=args.max_len), batched=True, remove_columns=['text'])
 ds_tr, ds_va = enc(tr), enc(va)
 
-set_seed(args.fold)  # avant de créer le modèle (tête initialisée au hasard)
+set_seed(args.fold)  # before creating the model (randomly initialised head)
 model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=2)
 name = f'{args.model.split("/")[-1]}_f{args.fold}'
 targs = TrainingArguments(
@@ -41,9 +41,9 @@ trainer = Trainer(model=model, args=targs, train_dataset=ds_tr, data_collator=Da
 trainer.train()
 if args.max_steps > 0:
     raise SystemExit
-trainer.args.group_by_length = False  # cf. mémo Posos : ne jamais trier en prédiction
+trainer.args.group_by_length = False  # see the Posos memo: never sort at prediction time
 logits = trainer.predict(ds_va).predictions
 p = torch.softmax(torch.tensor(logits), -1)[:, 1].numpy()
 os.makedirs(f'{D}/oof', exist_ok=True)
 np.savez(f'{D}/oof/{name}.npz', idx=va, p=p)
-print(f'pli {args.fold} : accuracy vs étiquettes bruitées = {((p > .5) == y[va]).mean():.4f}')
+print(f'fold {args.fold}: accuracy vs noisy labels = {((p > .5) == y[va]).mean():.4f}')

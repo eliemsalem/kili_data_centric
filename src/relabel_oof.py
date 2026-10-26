@@ -1,4 +1,4 @@
-"""Étape 3b : étiquettes suspectes par prédictions out-of-fold (TF-IDF + régression logistique)."""
+"""Step 3b: suspect labels from out-of-fold predictions (TF-IDF + logistic regression)."""
 import os
 import numpy as np
 import pandas as pd
@@ -21,8 +21,8 @@ p = np.zeros(len(y))
 for tr, va in StratifiedKFold(5, shuffle=True, random_state=0).split(X, y):
     p[va] = LogisticRegression(C=4, max_iter=2000).fit(X[tr], y[tr]).predict_proba(X[va])[:, 1]
 np.save(f'{D}/oof_lr.npy', p)
-p_other = np.where(y == 1, 1 - p, p)  # probabilité de l'autre étiquette
-print('accord OOF vs IMDB (vraie étiquette) :', ((p > .5) == m.imdb_label)[known].mean())
+p_other = np.where(y == 1, 1 - p, p)  # probability of the other label
+print('OOF vs IMDB (true label) agreement:', ((p > .5) == m.imdb_label)[known].mean())
 
 os.environ['FT_QUIET'] = '1'
 for t in [0.5, 0.6, 0.7, 0.8]:
@@ -31,5 +31,5 @@ for t in [0.5, 0.6, 0.7, 0.8]:
     rec = sus[known][truly_wrong].mean()
     flip = train.copy()
     flip.loc[sus, 'category'] = 1 - flip.loc[sus, 'category']
-    print(f't={t} suspects={sus.sum()} précision={prec:.3f} rappel={rec:.3f} | '
-          'inverser %.4f ± %.4f' % score(flip), '| supprimer %.4f ± %.4f' % score(train[~sus]), flush=True)
+    print(f't={t} suspects={sus.sum()} precision={prec:.3f} recall={rec:.3f} | '
+          'flip %.4f ± %.4f' % score(flip), '| delete %.4f ± %.4f' % score(train[~sus]), flush=True)
